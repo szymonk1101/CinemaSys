@@ -1,0 +1,27 @@
+
+<div class="container my-5">
+    <div class="row mb-3">
+        <div class="col">
+            <h3 class="font-weight-semibold">Nadchodzące seanse</h3>
+        </div>
+        <div class="col text-right">
+            <form class="form-inline justify-content-end">
+                <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Data</label>
+                <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+                    <option selected>Dzisiaj</option>
+                    <option value="1">Jutro</option>
+                </select>
+            </form>
+        </div>
+    </div>
+    
+    
+    <div class="row row-cols-1 row-cols-md-3">
+        
+        <div class="col mb-3" *ngFor="let filmshow of this.filmshows">
+            <app-filmshow-preview [filmshow]="filmshow"></app-filmshow-preview>
+        </div>
+
+    </div>
+
+</div>
