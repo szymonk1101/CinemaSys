@@ -11,6 +11,9 @@ import { FilmshowDetailsComponent } from './filmshow/filmshow-details/filmshow-d
 import { FilmshowPreviewComponent } from './filmshow/filmshow-preview/filmshow-preview.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { MovieDetailsComponent } from './movie/movie-details/movie-details.component';
+import { MovieListComponent } from './movie/movie-list/movie-list.component';
+import { MovieFormNewComponent } from './movie/movie-form-new/movie-form-new.component';
+import { DescTruncatePipe } from './core/pipes/desc-truncate.pipe';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,10 @@ import { MovieDetailsComponent } from './movie/movie-details/movie-details.compo
     FilmshowDetailsComponent,
     FilmshowPreviewComponent,
     PageNotFoundComponent,
-    MovieDetailsComponent
+    MovieDetailsComponent,
+    MovieListComponent,
+    MovieFormNewComponent,
+    DescTruncatePipe
   ],
   imports: [
     BrowserModule,

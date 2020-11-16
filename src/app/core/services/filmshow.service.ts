@@ -8,14 +8,19 @@ import { Filmshow } from '../models/Filmshow';
 
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class FilmshowService {
 
-  constructor(private http: HttpClient) { }
+	constructor(private http: HttpClient) { }
 
-  get(id: number): Observable<Filmshow> {
-    return this.http.get<Filmshow>(environment.apiUrl + "/filmshow/" + id, {})
-      .pipe(tap((x) => { console.log(x); } ));
-  }
+	get(id: number): Observable<Filmshow> {
+		return this.http.get<Filmshow>(environment.apiUrl + "/filmshow/" + id, {})
+			.pipe(tap((x) => { console.log(x); }));
+	}
+
+	getAll(): Observable<Filmshow[]> {
+		return this.http.get<Filmshow[]>(environment.apiUrl + "/filmshow/all", {})
+			.pipe(tap((x) => { console.log(x); }));
+	}
 }

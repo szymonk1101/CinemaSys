@@ -17,8 +17,11 @@
             </div>
             
             <div class="col-sm-9">
-                <p>{{ filmshow.movie.description }}</p>
-                <a [routerLink]="['/movie/details', filmshow.movie.id]">Szczegóły filmu</a>
+                <p>
+                    {{ filmshow.movie.description | descTruncate:256 }} 
+                    <br/><a [routerLink]="['/movie/details', filmshow.movie.id]">Szczegóły filmu</a>
+                </p>
+                
 
                 <h4>Wolne miejsca</h4>
                 Czas trwania: {{ filmshow.movie.duration }}min

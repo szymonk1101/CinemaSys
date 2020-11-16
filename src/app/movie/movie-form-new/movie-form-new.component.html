@@ -1,0 +1,20 @@
+<form [class.d-none]="!this.show">
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="movie_name">Tytuł</label>
+            <input type="text" class="form-control" id="movie_name" placeholder="Tytuł filmu" required />
+        </div>
+        <div class="form-group col-md-6">
+            <label for="movie_duration">Czas trwania (min)</label>
+            <input type="number" class="form-control" id="movie_duration" required />
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <textarea class="form-control" id="movie_description" placeholder="Opis filmu" required></textarea>
+        </div>
+    </div>
+
+    <button class="btn btn-success">Dodaj film</button>
+
+</form>

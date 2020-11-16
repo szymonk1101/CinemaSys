@@ -1,0 +1,42 @@
+<div class="container my-5">
+    <div class="row mb-3">
+        <div class="col">
+            <h3 class="font-weight-semibold">Baza filmów</h3>
+        </div>
+        <div class="col text-right">
+            <button class="btn btn-success" (click)="formnew.toggle()">Dodaj nowy</button>
+        </div>
+    </div>
+
+    <app-movie-form-new #formnew></app-movie-form-new>
+    <hr />
+
+    <div class="row row-cols-1 row-cols-md-3">
+
+        <div class="col mb-3" *ngFor="let movie of this.movies$ | async">
+            <div class="card h-100">
+                <div class="row no-gutters">
+                    <div class="col-md-4 align-self-center">
+                        <img src="{{ movie.image || 'assets/img/movie.png' }}" class="card-img" alt="{{ movie.title }}">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title"><a [routerLink]="['/movie/details', movie.id]" class="no-style stretched-link">{{ movie.title }}</a></h5>
+                            <p class="card-text mb-0">{{ movie.description | descTruncate:60 }}</p>
+                            <p class="card-text text-muted mb-0"></p>
+                            <div class="text-right">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div *ngIf="!movies$" class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+
+</div>
