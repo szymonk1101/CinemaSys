@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+
 import { Filmshow } from '../core/models/Filmshow';
 import { Movie } from '../core/models/Movie';
 import { Room } from '../core/models/Room';
+import { FilmshowService } from '../core/services/filmshow.service';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +15,17 @@ export class HomeComponent implements OnInit {
 
   filmshows: Filmshow[];
 
-  constructor() {
+  constructor(private filmshowService: FilmshowService, private router: Router) {
+
+    const film$: Observable<Filmshow> = filmshowService.get(5);
+    film$.subscribe({
+      next(film: Filmshow) {
+        console.log(film);
+      },
+      error(err) {
+        //router.navigate(['/404', 'Wybrany seans nie istnieje.']);
+      }
+    });
 
     const piraci: Movie = {
       id: 1,
@@ -36,14 +50,14 @@ export class HomeComponent implements OnInit {
       {
         id: 1,
         movie: piraci,
-        date: new Date("2020-11-12 20:30"),
+        date: "2020-11-12T19:30:00.000Z",
         room: room1,
         occupied_seats: []
       },
       {
         id: 2,
         movie: szybcy,
-        date: new Date("2020-11-12 22:30"),
+        date: "2020-11-12T19:30:00.000Z",
         room: room1,
         occupied_seats: []
       }

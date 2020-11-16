@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
 import { Filmshow } from 'src/app/core/models/Filmshow';
 
 @Component({
@@ -7,12 +9,14 @@ import { Filmshow } from 'src/app/core/models/Filmshow';
 })
 export class FilmshowDetailsComponent implements OnInit {
 
-  private filmshow: Filmshow;
+  filmshow: Filmshow;
 
-  constructor() { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    
+    this.route.data.subscribe((data: { filmshow: Filmshow }) => {
+      this.filmshow = data.filmshow;
+    });
   }
 
 }

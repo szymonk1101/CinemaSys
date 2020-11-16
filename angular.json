@@ -24,12 +24,13 @@
               "src/assets"
             ],
             "styles": [
-			  "src/assets/css/bootstrap.min.css",
+			        "src/assets/css/bootstrap.min.css",
               "src/styles.css"
             ],
             "scripts": [
-			  "src/assets/js/bootstrap.min.js"
-			]
+              "src/assets/js/jquery-3.5.1.min.js",
+			        "src/assets/js/bootstrap.min.js"
+			      ]
           },
           "configurations": {
             "production": {
