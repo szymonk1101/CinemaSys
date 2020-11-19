@@ -7,7 +7,7 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Seanse</a>
+                    <a class="nav-link" routerLink="/filmshow" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }">Seanse</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/movie" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Filmy</a>
@@ -16,3 +16,4 @@
         </div>
     </div>
 </nav>
+<app-layout-breadcrumb></app-layout-breadcrumb>
