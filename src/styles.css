@@ -15,3 +15,11 @@ a.no-style {
 a.no-style:hover {
     opacity: 0.8;
 }
+
+.ng-invalid {
+    border-color: #dc3545
+}
+
+.ng-valid {
+    border-color: #28a745;
+}

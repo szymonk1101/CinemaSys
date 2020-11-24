@@ -20,8 +20,26 @@
                 <p>{{ movie.description }}</p>
 
                 Czas trwania: {{ movie.duration }}min
+            </div>
+        </div>
 
+        <div class="row mt-5">
+            <div class="col-sm-12">
                 <h4>Seanse</h4>
+            </div>
+            <div class="col-sm-12">
+
+                <div class="row row-cols-1 row-cols-md-3">
+        
+                    <div class="col mb-3" *ngFor="let filmshow of this.filmshows">
+                        <app-filmshow-meta [filmshow]="filmshow"></app-filmshow-meta>
+                    </div>
+            
+                </div>
+
+                <div *ngIf="!filmshows" class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
             </div>
         </div>
         

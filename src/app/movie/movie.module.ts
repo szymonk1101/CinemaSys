@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { MovieRoutingModule } from './movie-routing.module';
 
@@ -18,7 +19,8 @@ import { SharedModule } from '../shared/shared.module';
 	imports: [
 		CommonModule,
 		MovieRoutingModule,
-		SharedModule
+		SharedModule,
+		ReactiveFormsModule
 	]
 })
 export class MovieModule { }

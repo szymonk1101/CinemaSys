@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="card-body">
                 <h5 class="card-title"><a [routerLink]="['/filmshow/details', filmshow.id]" class="no-style">{{ filmshow.movie.title }}</a></h5>
-                <p class="card-text mb-0">{{ filmshow.movie.description }}</p>
+                <p class="card-text mb-0">{{ filmshow.movie.description | descTruncate: 60 }}</p>
                 <p class="card-text text-muted mb-0">{{ filmshow.date | date: 'dd.MM.yyyy HH:mm'}}</p>
                 <div class="text-right">
                     <small class="card-text font-weight-bold text-success">5 wolnych miejsc</small>

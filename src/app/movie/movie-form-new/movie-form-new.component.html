@@ -1,20 +1,23 @@
-<form [class.d-none]="!this.show">
+<form [class.d-none]="!this.show" [formGroup]="movieForm">
+    <div class="alert alert-success" [class.d-none]="this.success_msg == undefined" role="alert">
+        {{ success_msg }}
+    </div>
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="movie_name">Tytuł</label>
-            <input type="text" class="form-control" id="movie_name" placeholder="Tytuł filmu" required />
+            <input type="text" class="form-control" id="movie_name" formControlName="title" placeholder="Tytuł filmu" required />
         </div>
         <div class="form-group col-md-6">
             <label for="movie_duration">Czas trwania (min)</label>
-            <input type="number" class="form-control" id="movie_duration" required />
+            <input type="number" class="form-control" id="movie_duration" formControlName="duration" required />
         </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-12">
-            <textarea class="form-control" id="movie_description" placeholder="Opis filmu" required></textarea>
+            <textarea class="form-control" id="movie_description" placeholder="Opis filmu" formControlName="description" required></textarea>
         </div>
     </div>
 
-    <button class="btn btn-success">Dodaj film</button>
+    <button class="btn btn-success" (click)="addMovieClick($event)">Dodaj film</button>
 
 </form>
