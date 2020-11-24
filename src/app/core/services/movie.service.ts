@@ -39,7 +39,7 @@ export class MovieService {
 			.subscribe((movies) => { 
 				this.movies = movies;
 				this.movies$.next(this.movies);
-			})
+		});
 
 		return this.movies$;
 	}

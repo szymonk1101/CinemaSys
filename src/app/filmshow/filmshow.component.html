@@ -4,15 +4,18 @@
             <h3 class="font-weight-semibold">Nadchodzące seanse</h3>
         </div>
         <div class="col text-right">
-            <form class="form-inline justify-content-end">
+            <form class="form-inline justify-content-end d-inline-flex">
                 <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Data</label>
                 <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
                     <option selected>Dzisiaj</option>
                     <option value="1">Jutro</option>
                 </select>
             </form>
+            <button class="btn btn-success d-inline-flex" (click)="formnew.toggle()">Dodaj nowy</button>
         </div>
     </div>
+
+    <app-filmshow-form-new #formnew></app-filmshow-form-new>
     <hr />
     
     <div class="row row-cols-1 row-cols-md-3">
