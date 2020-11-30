@@ -18,6 +18,6 @@
         </div>
     </div>
 
-    <button class="btn btn-success" (click)="addMovieClick($event)">Dodaj film</button>
+    <button class="btn btn-success" (click)="addMovieClick($event)" [disabled]="!this.movieForm.valid">Dodaj film</button>
 
 </form>

@@ -1,21 +1,32 @@
 <div class="container my-5">
     <div class="row mb-3">
-        <div class="col">
+        <div class="col-md-4">
             <h3 class="font-weight-semibold">Nadchodzące seanse</h3>
         </div>
-        <div class="col text-right">
-            <form class="form-inline justify-content-end d-inline-flex">
-                <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Data</label>
-                <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-                    <option selected>Dzisiaj</option>
-                    <option value="1">Jutro</option>
+        <div class="col-md-8 text-right">
+
+            <form #formfilter class="novalidate valid form-inline justify-content-end">
+                <label class="my-1 mr-2" for="dateTypeSelect">Data</label>
+                <select #dateselect class="custom-select my-1 mr-sm-2" id="dateTypeSelect" [(ngModel)]="dateType" name="dateTypeSelect" (change)="onChangeDate()">
+                    <option value="today">Dzisiaj</option>
+                    <option value="datepicker">Konkretna data</option>
+                    <option value="all">Pokaż wszystkie</option>
                 </select>
+            
+                <div class="input-group" [class.d-none]="dateType != 'datepicker'">
+                    <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="datePicker" (dateSelect)="onChangeDate()" ngbDatepicker #d="ngbDatepicker">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                    </div>
+                </div>
+            
+                <button class="btn btn-success d-inline-flex ml-2" (click)="formnew.toggle()">Dodaj nowy</button>
             </form>
-            <button class="btn btn-success d-inline-flex" (click)="formnew.toggle()">Dodaj nowy</button>
+           
         </div>
     </div>
 
-    <app-filmshow-form-new #formnew></app-filmshow-form-new>
+    <app-filmshow-form #formnew (onSubmitForm)="onAddFilmshow($event)"></app-filmshow-form>
     <hr />
     
     <div class="row row-cols-1 row-cols-md-3">

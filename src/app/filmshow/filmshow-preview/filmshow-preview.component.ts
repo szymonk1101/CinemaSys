@@ -9,4 +9,6 @@ export class FilmshowPreviewComponent {
 
   @Input() filmshow: Filmshow;
 
+  now = new Date().toISOString();
+
 }

@@ -9,7 +9,7 @@
                 <p class="card-text mb-0">{{ filmshow.movie.description | descTruncate: 60 }}</p>
                 <p class="card-text text-muted mb-0">{{ filmshow.date | date: 'dd.MM.yyyy HH:mm'}}</p>
                 <div class="text-right">
-                    <small class="card-text font-weight-bold text-success">5 wolnych miejsc</small>
+                    <small class="card-text font-weight-bold text-success">{{ filmshow | seatsCnt }} wolnych miejsc</small>
                     <button class="btn btn-primary ml-2 my-2">Kup bilet</button>
                 </div>
             </div>

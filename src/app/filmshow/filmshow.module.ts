@@ -8,14 +8,14 @@ import { FilmshowRoutingModule } from './filmshow-routing.module';
 import { FilmshowComponent } from './filmshow.component';
 import { FilmshowDetailsComponent } from './filmshow-details/filmshow-details.component';
 import { FilmshowPreviewComponent } from './filmshow-preview/filmshow-preview.component';
-import { FilmshowFormNewComponent } from './filmshow-form-new/filmshow-form-new.component';
+import { FilmshowFormComponent } from './filmshow-form/filmshow-form.component';
 
 @NgModule({
   declarations: [
     FilmshowComponent,
     FilmshowDetailsComponent,
     FilmshowPreviewComponent,
-    FilmshowFormNewComponent
+    FilmshowFormComponent
   ],
   imports: [
     CommonModule,
