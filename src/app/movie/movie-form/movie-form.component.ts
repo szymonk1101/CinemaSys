@@ -1,13 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Movie } from 'src/app/core/models/Movie';
 import { MovieService } from 'src/app/core/services/movie.service';
+import { ToastService } from 'src/app/core/services/toast.service';
 
 @Component({
-	selector: 'app-movie-form-new',
-	templateUrl: './movie-form-new.component.html',
+	selector: 'app-movie-form',
+	templateUrl: './movie-form.component.html',
 })
-export class MovieFormNewComponent implements OnInit {
+export class MovieFormComponent implements OnInit {
+
+	@Input() bindMovie?: Movie;
+	@Input() buttonText = "Dodaj film";
+	@Output() onSubmitForm = new EventEmitter<Movie>();
 
 	public show: boolean = false;
 	public movieForm: FormGroup;
@@ -15,9 +20,13 @@ export class MovieFormNewComponent implements OnInit {
 	private movie: Movie = {} as Movie;
 
 	
-	constructor(private movieService: MovieService) { }
+	constructor(private movieService: MovieService, private toastService: ToastService) { }
 
 	ngOnInit(): void {
+		if(this.bindMovie) {
+			this.movie = this.bindMovie;
+		}
+
 		this.movieForm = new FormGroup({
 			title: new FormControl(this.movie.title, [
 				Validators.required,
@@ -31,20 +40,17 @@ export class MovieFormNewComponent implements OnInit {
 		});
 	}
 
-	addMovieClick(event: MouseEvent)
+	submitMovieFormClick()
 	{
 		if(this.movieForm.valid) {
 			Object.assign(this.movie, this.movieForm.value);
 			
-			this.movieService.add(this.movie).subscribe({
-				next: (movie: Movie) => {
-					this.movieForm.reset();
-					this.success_msg = "Nowy film został pomyślnie dodany.";
-				}
-			});
+			this.onSubmitForm.emit(this.movie);
+			this.movieForm.reset();
+			this.show = false;
 		} 
 		else {
-			console.log("Popraw");
+			this.toastService.show("Popraw dane w formularzu.", { classname: 'bg-danger text-light', delay: 5000 });
 		}
 	}
 

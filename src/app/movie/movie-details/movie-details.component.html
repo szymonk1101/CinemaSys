@@ -1,13 +1,15 @@
 <div class="container my-5">
 
-    <div *ngIf="movie">
+    <div *ngIf="movie" id="movie_container">
+
+        <app-movie-form #formnew buttonText="Zapisz film" [bindMovie]="movie" (onSubmitForm)="onUpdateMovie($event)"></app-movie-form>
 
         <div class="row mb-5">
             <div class="col-sm-8">
                 <h3 class="font-weight-semibold">{{ movie.title }}</h3>
             </div>
             <div class="col-sm-4 text-right">
-                <h4></h4>
+                <button class="btn btn-primary" (click)="formnew.toggle()">Edytuj</button>
             </div>
         </div>
 

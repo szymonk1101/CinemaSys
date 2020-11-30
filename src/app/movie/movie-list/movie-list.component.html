@@ -8,7 +8,7 @@
         </div>
     </div>
 
-    <app-movie-form-new #formnew></app-movie-form-new>
+    <app-movie-form #formnew (onSubmitForm)="onAddMovie($event)"></app-movie-form>
     <hr />
 
     <div class="row row-cols-1 row-cols-md-3">

@@ -30,8 +30,6 @@ export class FilmshowComponent implements OnInit {
 
 	onAddFilmshow(filmshow: Filmshow): void 
 	{
-		console.log(filmshow);
-
 		this.filmshowService.add(filmshow).subscribe({
 			next: (filmshow: Filmshow) => {
 				this.toastService.show("Nowy seans został pomyślnie dodany.", { classname: 'bg-success text-light', delay: 5000 });

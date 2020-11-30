@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 
 import { Movie } from 'src/app/core/models/Movie';
 import { MovieService } from 'src/app/core/services/movie.service';
+import { ToastService } from 'src/app/core/services/toast.service';
 
 @Component({
 	selector: 'app-movie-list',
@@ -12,24 +13,23 @@ export class MovieListComponent implements OnInit {
 
 	movies$: Observable<Movie[]>;
 
-	constructor(private movieService: MovieService) {
+	constructor(private movieService: MovieService, private toastService: ToastService) {
 		
 		setTimeout(() => {
 			this.movies$ = movieService.getAll(); 
 		}, 1000);
-		
-		/*movies$.subscribe({
-			next(movies: Movie[]) {
-				console.log(movies);
-				this.movies = movies;
-			},
-			error(err) {
-				//router.navigate(['/404', 'Wybrany seans nie istnieje.']);
-			}
-		});*/
 	}
 
 	ngOnInit(): void {
+	}
+
+	onAddMovie(movie: Movie): void {
+
+		this.movieService.add(movie).subscribe({
+			next: (movie: Movie) => {
+				this.toastService.show("Nowy film został pomyślnie dodany.", { classname: 'bg-success text-light', delay: 5000 });
+			}
+		});
 	}
 
 }

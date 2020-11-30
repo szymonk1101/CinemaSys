@@ -28,6 +28,20 @@ export class MovieService {
 			));
 	}
 
+	update(movie: Movie): Observable<Movie> {
+		return this.http.put<Movie>(environment.apiUrl + "/movie/" + movie.id, movie)
+			.pipe(tap(
+				(movie: Movie) => {
+					this.movies.forEach((v: Movie, index: number) => {
+						if(v.id == movie.id) {
+							this.movies[index] = movie;
+						}
+					});
+					this.movies$.next(this.movies);
+				}
+			));
+	}
+
 	getById(id: number): Observable<Movie> {
 		return this.http.get<Movie>(environment.apiUrl + "/movie/" + id, {})
 			.pipe(tap((x) => { console.log(x); }));
