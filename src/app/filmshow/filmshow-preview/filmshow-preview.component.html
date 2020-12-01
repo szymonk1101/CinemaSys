@@ -10,7 +10,7 @@
                 <p class="card-text text-muted mb-0">{{ filmshow.date | date: 'dd.MM.yyyy HH:mm'}}</p>
                 <div class="text-right">
                     <small class="card-text font-weight-bold text-success">{{ filmshow | seatsCnt }} wolnych miejsc</small>
-                    <button class="btn btn-primary ml-2 my-2">Kup bilet</button>
+                    <button class="btn btn-primary ml-2 my-2" [routerLink]="['/filmshow/buy', filmshow.id]">Kup bilet</button>
                 </div>
             </div>
         </div>

@@ -46,7 +46,6 @@ export class MovieFormComponent implements OnInit {
 			Object.assign(this.movie, this.movieForm.value);
 			
 			this.onSubmitForm.emit(this.movie);
-			this.movieForm.reset();
 			this.show = false;
 		} 
 		else {
@@ -56,6 +55,10 @@ export class MovieFormComponent implements OnInit {
 
 	toggle(): void {
 		this.show = !this.show;
+	}
+
+	reset(): void {
+		this.movieForm.reset();
 	}
 
 }

@@ -23,4 +23,20 @@ export class RoomService {
 				this.movies$.next(this.movies);
 			})*/
 	}
+
+	//utilities
+	getRoomSeatsArray(seats_cnt: number): number[][] {
+		let seats = [];
+		let row = [];
+
+		for(let i = 1; i <= seats_cnt; i++) {
+			row.push(i);
+			if(i % 10 == 0) {
+				seats.push(row);
+				row = [];
+			}
+		}
+
+		return seats;
+	}
 }

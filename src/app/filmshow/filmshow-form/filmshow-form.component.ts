@@ -61,7 +61,6 @@ export class FilmshowFormComponent implements OnInit {
 			this.filmshow.date = `${this.datepicker.year}-${this.datepicker.month}-${this.datepicker.day} ${this.timepicker.hour}:${this.timepicker.minute}`;
 			
 			this.onSubmitForm.emit(this.filmshow);
-			this.filmshowForm.reset();
 			this.show = false;
 		} 
 		else {
@@ -71,6 +70,10 @@ export class FilmshowFormComponent implements OnInit {
 
 	toggle(): void {
 		this.show = !this.show;
+	}
+
+	reset(): void {
+		this.filmshowForm.reset();
 	}
 
 }

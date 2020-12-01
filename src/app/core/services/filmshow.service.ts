@@ -5,6 +5,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
 import { Filmshow } from '../models/Filmshow';
+import { ApiResult } from '../models/ApiResult';
 
 
 @Injectable({
@@ -81,5 +82,16 @@ export class FilmshowService {
 			.pipe(
 				tap((x) => { console.log(x); })
 			);
+	}
+
+	// tickets
+	buyTicket(filmshow: Filmshow, seat: number): Observable<ApiResult>
+	{
+		return this.http.post<ApiResult>(environment.apiUrl + "/filmshow/buy/"+filmshow.id+"/"+seat, filmshow)
+			.pipe(tap(
+				(result: ApiResult) => {
+					console.log(result);
+				}
+			));
 	}
 }

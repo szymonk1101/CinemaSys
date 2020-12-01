@@ -9,13 +9,15 @@ import { FilmshowComponent } from './filmshow.component';
 import { FilmshowDetailsComponent } from './filmshow-details/filmshow-details.component';
 import { FilmshowPreviewComponent } from './filmshow-preview/filmshow-preview.component';
 import { FilmshowFormComponent } from './filmshow-form/filmshow-form.component';
+import { FilmshowBuyComponent } from './filmshow-buy/filmshow-buy.component';
 
 @NgModule({
   declarations: [
     FilmshowComponent,
     FilmshowDetailsComponent,
     FilmshowPreviewComponent,
-    FilmshowFormComponent
+    FilmshowFormComponent,
+    FilmshowBuyComponent
   ],
   imports: [
     CommonModule,

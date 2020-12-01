@@ -26,7 +26,7 @@
         </div>
     </div>
 
-    <app-filmshow-form #formnew (onSubmitForm)="onAddFilmshow($event)"></app-filmshow-form>
+    <app-filmshow-form #formnew (onSubmitForm)="onAddFilmshow($event);formnew.reset()"></app-filmshow-form>
     <hr />
     
     <div class="row row-cols-1 row-cols-md-3">

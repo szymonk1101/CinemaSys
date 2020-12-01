@@ -21,12 +21,15 @@
                     {{ filmshow.movie.description | descTruncate:256 }} 
                     <br/><a [routerLink]="['/movie/details', filmshow.movie.id]">Szczegóły filmu</a>
                 </p>
-                
 
-                <h4>Wolne miejsca</h4>
                 Czas trwania: {{ filmshow.movie.duration }}min
 
-                <button class="btn btn-primary btn-lg">Kup bilet</button>
+                <div>
+                    <h5 class="font-weight-bold text-success my-4">Wolne miejsca: {{ filmshow | seatsCnt }}</h5>
+                    <button class="btn btn-primary btn-lg" [routerLink]="['/filmshow/buy', filmshow.id]">Kup bilet</button>
+                </div>
+                
+                
             </div>
         </div>
         

@@ -29,8 +29,8 @@ export class MovieService {
 	}
 
 	update(movie: Movie): Observable<Movie> {
-		return this.http.put<Movie>(environment.apiUrl + "/movie/" + movie.id, movie)
-			.pipe(tap(
+		return this.http.put<Movie>(environment.apiUrl + "/movie/" + movie.id, movie);
+			/*.pipe(tap(
 				(movie: Movie) => {
 					this.movies.forEach((v: Movie, index: number) => {
 						if(v.id == movie.id) {
@@ -38,8 +38,9 @@ export class MovieService {
 						}
 					});
 					this.movies$.next(this.movies);
+					console.log("next");
 				}
-			));
+			));*/
 	}
 
 	getById(id: number): Observable<Movie> {

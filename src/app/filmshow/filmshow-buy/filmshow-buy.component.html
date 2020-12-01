@@ -1,0 +1,61 @@
+
+<div class="container my-5">
+
+    <div *ngIf="filmshow">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h3 class="font-weight-semibold">{{ filmshow.movie.title }}</h3>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                Czas trwania: {{ filmshow.movie.duration }}min
+                <p>
+                    {{ filmshow.movie.description | descTruncate:256 }} 
+                    <br/><a [routerLink]="['/movie/details', filmshow.movie.id]">Szczegóły filmu</a>
+                </p>
+
+                <h4>{{ filmshow.date | date: 'dd.MM.yyyy HH:mm' }}</h4>
+            </div>
+        </div>
+        
+    </div>
+
+    <hr />
+
+    <div class="row">
+
+        <div class="col">
+
+            <h5>Wybierz miejsce:</h5>
+
+            <table class="table">
+
+                <tr *ngFor="let r of seats">
+                    <td *ngFor="let s of r">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="seat_num" [(ngModel)]="seat" [id]="'seat_num_' + s" [value]="s" [disabled]="occupied_seats.indexOf(s) != -1">
+                            <label class="form-check-label" [for]="'seat_num_' + s">{{ s }}</label>
+                        </div>
+                    </td>
+                </tr>
+
+            </table>
+
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="terms" #terms [(ngModel)]="termss">
+                <label class="form-check-label" for="terms">Zapoznałem się i akceptuję regulamin kina</label>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row mt-5">
+        <div class="col text-center">
+            <button class="btn btn-lg btn-success" [disabled]="!seat || !termss" (click)="onBuyClick()">Kupuję bilet</button>
+        </div>
+    </div>
+
+</div>

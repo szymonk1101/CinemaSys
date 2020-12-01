@@ -13,4 +13,14 @@ export class ToastService {
 	remove(toast) {
 		this.toasts = this.toasts.filter(t => t !== toast);
 	}
+
+	success(textOrTpl: string | TemplateRef<any>, options: any = {}) {
+		options.classname = 'bg-success text-light';
+		this.toasts.push({ textOrTpl, ...options });
+	}
+	
+	error(textOrTpl: string | TemplateRef<any>, options: any = {}) {
+		options.classname = 'bg-danger text-light';
+		this.toasts.push({ textOrTpl, ...options });
+	}
 }
