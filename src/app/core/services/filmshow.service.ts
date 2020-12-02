@@ -68,6 +68,14 @@ export class FilmshowService {
 			);
 	}
 
+	getAllByMovieId(movie_id: number): Observable<Filmshow[]>
+	{
+		return this.http.get<Filmshow[]>(environment.apiUrl + "/movie/"+ movie_id +"/filmshows/all", {})
+			.pipe(
+				tap((x) => { console.log(x); })
+			);
+	}
+
 	getToday(): Observable<Filmshow[]>
 	{
 		return this.http.get<Filmshow[]>(environment.apiUrl + "/filmshow/today", {})
