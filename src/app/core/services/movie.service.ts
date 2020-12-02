@@ -4,6 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
+import { ApiResult } from '../models/ApiResult';
 import { Movie } from '../models/Movie';
 
 @Injectable({
@@ -41,6 +42,11 @@ export class MovieService {
 					console.log("next");
 				}
 			));*/
+	}
+
+	detele(movie: Movie): Observable<ApiResult> {
+		return this.http.delete<ApiResult>(environment.apiUrl + "/movie/" + movie.id, {})
+			.pipe(tap((x) => { console.log(x); }));
 	}
 
 	getById(id: number): Observable<Movie> {

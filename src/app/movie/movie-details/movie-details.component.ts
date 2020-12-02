@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ApiResult } from 'src/app/core/models/ApiResult';
 
 import { Filmshow } from 'src/app/core/models/Filmshow';
 import { Movie } from 'src/app/core/models/Movie';
@@ -14,10 +15,19 @@ import { ToastService } from 'src/app/core/services/toast.service';
 })
 export class MovieDetailsComponent implements OnInit {
 
+	@ViewChild('confirmmodal') confirmmodal: NgbActiveModal;
+
 	movie: Movie;
 	filmshows: Filmshow[];
 
-	constructor(private movieService: MovieService, private filmshowService: FilmshowService, private toastService: ToastService, private route: ActivatedRoute) { }
+	constructor(
+		private movieService: MovieService, 
+		private filmshowService: FilmshowService, 
+		private toastService: ToastService, 
+		private router: Router,
+		private route: ActivatedRoute,
+		private modalsService: NgbModal
+	) { }
 
 	ngOnInit(): void {
 		this.route.data.subscribe((data: { movie: Movie }) => {
@@ -31,6 +41,19 @@ export class MovieDetailsComponent implements OnInit {
 			(next: Movie) => {
 				this.movie = next;
 				this.toastService.show("Dane filmu zostały zaktualizowane.", { classname: 'bg-success text-light', delay: 5000 });
+		});
+	}
+
+	onDeleteMovie(): void {
+		this.modalsService.open(this.confirmmodal).closed.subscribe((value: string) => {
+			if(value == "delete") {
+				
+				this.movieService.detele(this.movie).subscribe((result: ApiResult) => {
+					this.toastService.success("Film został pomyślnie usunięty.");
+					this.router.navigate(['/movie']);
+				});
+
+			}
 		});
 	}
 
