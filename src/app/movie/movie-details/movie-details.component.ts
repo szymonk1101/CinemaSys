@@ -6,6 +6,7 @@ import { ApiResult } from 'src/app/core/models/ApiResult';
 import { Filmshow } from 'src/app/core/models/Filmshow';
 import { Movie } from 'src/app/core/models/Movie';
 import { FilmshowService } from 'src/app/core/services/filmshow.service';
+import { ImageService } from 'src/app/core/services/image.service';
 import { MovieService } from 'src/app/core/services/movie.service';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { MovieStatsComponent } from '../movie-stats/movie-stats.component';
@@ -24,6 +25,7 @@ export class MovieDetailsComponent implements OnInit {
 	constructor(
 		private movieService: MovieService, 
 		private filmshowService: FilmshowService, 
+		private imageService: ImageService,
 		private toastService: ToastService, 
 		private router: Router,
 		private route: ActivatedRoute,
@@ -38,11 +40,19 @@ export class MovieDetailsComponent implements OnInit {
 	}
 
 	onUpdateMovie(movie: Movie): void {
-		this.movieService.update(movie).subscribe(
-			(next: Movie) => {
-				this.movie = next;
-				this.toastService.show("Dane filmu zostały zaktualizowane.", { classname: 'bg-success text-light', delay: 5000 });
-		});
+		if(typeof movie.image !== "string") {
+			this.imageService.uploadImage(movie.image as File).subscribe(
+				(res: ApiResult) => {
+					movie.image = res.data.shift();
+					this.updateMovie(movie);
+				},
+				() => {
+					this.toastService.error("Wystąpił błąd podczas ładowania plakatu.");
+				}
+			);
+		} else {
+			this.updateMovie(movie);
+		}
 	}
 
 	onDeleteMovie(): void {
@@ -58,12 +68,20 @@ export class MovieDetailsComponent implements OnInit {
 		});
 	}
 
-	private loadFilmshows() {
-		setTimeout(() => {
+	private updateMovie(movie: Movie): void {
+		this.movieService.update(movie).subscribe(
+			(next: Movie) => {
+				this.movie = next;
+				this.toastService.show("Dane filmu zostały zaktualizowane.", { classname: 'bg-success text-light', delay: 5000 });
+		});
+	}
+
+	private loadFilmshows(): void {
+		//setTimeout(() => {
 			this.filmshowService.getByMovieId(this.movie.id).subscribe((movies) => {
 				this.filmshows = movies;
 			});
-		}, 1000);
+		//}, 1000);
 	}
 
 }

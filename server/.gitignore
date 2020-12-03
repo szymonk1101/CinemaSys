@@ -1,5 +1,11 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+temp/*
+
+!uploads/
+uploads/*
+!uploads/readme.txt
+
 # compiled output
 /dist
 /tmp

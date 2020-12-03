@@ -17,6 +17,12 @@
             <textarea class="form-control" id="movie_description" placeholder="Opis filmu" formControlName="description" [(ngModel)]="bindMovie.description" required></textarea>
         </div>
     </div>
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label for="movie_image">Plakat</label>
+            <input #imageInput type="file" accept="image/*" class="form-control-file" id="movie_image" formControlName="image" (change)="processFile(imageInput)" />
+        </div>
+    </div>
 
     <div class="form-row justify-content-end">
         <button class="btn btn-success" (click)="submitMovieFormClick()" [disabled]="!this.movieForm.valid">{{ buttonText }}</button>

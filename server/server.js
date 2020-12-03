@@ -3,7 +3,15 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mysql = require('mysql');
-const nl2br  = require('nl2br');
+//const nl2br  = require('nl2br');
+
+const path = require("path");
+const multer = require("multer");
+
+const upload = multer({
+	dest: "./temp"
+});
+  
 
 const app = express();
 
@@ -33,6 +41,31 @@ con.connect(function(err) {
 		console.log("MYSQL - Connection successful");
 });
 
+
+// UTILITY FUNCTIONS
+const handleError = (res, err, code, message = "Oops! Something went wrong!") => {
+	console.log(err);
+	res.status(code).end(message);
+};
+
+const getApiResult = (status, message, data = []) => {
+	return {
+		"status": status,
+		"message": message,
+		"data": data
+	}; 
+};
+
+const makeid = (length) => {
+	var result = '';
+	var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	var charactersLength = characters.length;
+	for (var i = 0; i < length; i++) {
+		result += characters.charAt(Math.floor(Math.random() * charactersLength));
+	}
+	return result;
+}
+// ====================
 
 app.get('/filmshow/all', (req, res) => {
 	
@@ -439,7 +472,8 @@ app.get('/movie/:id/filmshows', (req, res) => {
 					"id": r.movie_id,
 					"title": r.title,
 					"description": r.description,
-					"duration": r.duration
+					"duration": r.duration,
+					"image": r.image
 				},
 				"room": {
 					"num": r.num,
@@ -480,7 +514,8 @@ app.get('/movie/:id/filmshows/all', (req, res) => {
 					"id": r.movie_id,
 					"title": r.title,
 					"description": r.description,
-					"duration": r.duration
+					"duration": r.duration,
+					"image": r.image
 				},
 				"room": {
 					"num": r.num,
@@ -500,11 +535,18 @@ app.get('/movie/:id/filmshows/all', (req, res) => {
 
 app.put('/movie/:id', (req, res) => {
 	
-	let sql = "UPDATE movies SET title = ?, description = ?, duration = ? WHERE id = ?";
+	let params = [req.body.title, req.body.description, req.body.duration];
+	let sql = "UPDATE movies SET title = ?, description = ?, duration = ?";
+
+	if(req.body.image) {
+		params.push(req.body.image);
+		sql += ", image = ?";
+	}
+
+	params.push(req.params.id);
+	sql += " WHERE id = ?";
 	
-	con.query(sql, [
-		req.body.title, req.body.description, req.body.duration, req.params.id
-	],
+	con.query(sql, params, 
 	function (err, result) {
 		if (err) {
 			console.log(err.sqlMessage);
@@ -519,10 +561,10 @@ app.put('/movie/:id', (req, res) => {
 
 app.post('/movie', (req, res) => {
 	
-	let sql = "INSERT INTO movies (title, description, duration) VALUES (?, ?, ?)";
+	let sql = "INSERT INTO movies (title, description, duration, image) VALUES (?, ?, ?, ?)";
 	
 	con.query(sql, [
-		req.body.title, req.body.description, req.body.duration
+		req.body.title, req.body.description, req.body.duration, req.body.image
 	],
 	function (err, result) {
 		if (err) {
@@ -580,6 +622,53 @@ app.get('/room/all', (req, res) => {
 		console.log("GET /room/all");
 		res.send(result);
 	});
+	
+});
+
+app.post('/file',
+
+	upload.single('image' /* name attribute of <file> element in your form */), 
+		
+	(req, res) => {
+		console.log(req.file);
+		// always new file
+		//const newName = req.file.originalname.split('.').slice(0, -1).join('.').toLowerCase() + makeid(6) + path.extname(req.file.originalname);
+		// rewrite files with the same name
+		const newName = req.file.originalname.split('.').slice(0, -1).join('.').toLowerCase() + path.extname(req.file.originalname);
+		const tempPath = req.file.path;
+		const targetPath = path.join(__dirname, "./uploads/" + newName);
+
+		if (req.file.mimetype.split('/').shift() === "image") {
+			fs.rename(tempPath, targetPath, err => {
+				if (err) {
+					return handleError(res, err, 403, err.message);
+				}
+				
+				res.status(200).send(getApiResult(1, "Plik został załadowany!", [newName]));
+			});
+		} else {
+			fs.unlink(tempPath, err => {
+				if (err) {
+					return handleError(res, err, 403, err.message);
+				}
+
+				return handleError(res, "Only image files are allowed!", 403, "Only image files are allowed!");
+			});
+		}
+	}
+);
+
+app.get('/file/:name', (req, res) => {
+
+	let filePath = path.join(__dirname, "./uploads/" + req.params.name);
+	
+	if(fs.existsSync(filePath)) {
+
+		res.sendFile(filePath);
+	
+	} else {
+		return handleError(res, "File not exists!", 404, "File not exists!");
+	}
 	
 });
 
