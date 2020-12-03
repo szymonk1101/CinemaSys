@@ -5,7 +5,7 @@
                 <h5 class="card-title"><a [routerLink]="['/filmshow/details', filmshow.id]" class="no-style">{{ filmshow.date | date: 'dd.MM.yyyy HH:mm' }}</a></h5>
                 <p>
                     <small class="card-text font-weight-bold text-success"> {{ filmshow | seatsCnt }} wolnych miejsc</small>
-                    <button class="btn btn-primary ml-2 my-2">Kup bilet</button>
+                    <button class="btn btn-primary ml-2 my-2" [routerLink]="['/filmshow/buy', filmshow.id]">Kup bilet</button>
                 </p>
             </div>
         </div>

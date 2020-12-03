@@ -28,7 +28,7 @@
                 <h3 class="font-weight-semibold">{{ movie.title }}</h3>
             </div>
             <div class="col-sm-4 text-right">
-                <button class="btn btn-secondary" (click)="moviestats.toggle()">Statystyki</button>
+                <button class="btn btn-secondary" (click)="onShowStatsClick(moviestats, statsscroll)">Statystyki</button>
                 <button class="btn btn-primary ml-2" (click)="formedit.toggle()">Edytuj</button>
                 <button class="btn btn-danger ml-2" (click)="onDeleteMovie()">Usuń</button>
             </div>
@@ -70,7 +70,9 @@
             </div>
         </div>
 
-       <app-movie-stats #moviestats [movie]="movie"></app-movie-stats>
+        <div id="statsscroll" #statsscroll>
+            <app-movie-stats #moviestats [movie]="movie"></app-movie-stats>
+        </div>
         
     </div>
 

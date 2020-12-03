@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ApiResult } from 'src/app/core/models/ApiResult';
@@ -8,6 +8,7 @@ import { Movie } from 'src/app/core/models/Movie';
 import { FilmshowService } from 'src/app/core/services/filmshow.service';
 import { MovieService } from 'src/app/core/services/movie.service';
 import { ToastService } from 'src/app/core/services/toast.service';
+import { MovieStatsComponent } from '../movie-stats/movie-stats.component';
 
 @Component({
 	selector: 'app-movie-details',
@@ -55,6 +56,13 @@ export class MovieDetailsComponent implements OnInit {
 
 			}
 		});
+	}
+
+	onShowStatsClick(moviestats: MovieStatsComponent, statsscroll: HTMLElement): void {
+		moviestats.toggle(); 
+		if(moviestats.show) {
+			statsscroll.scrollIntoView({behavior: 'smooth', block: 'center'});
+		}
 	}
 
 	private loadFilmshows() {
