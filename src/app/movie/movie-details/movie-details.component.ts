@@ -58,13 +58,6 @@ export class MovieDetailsComponent implements OnInit {
 		});
 	}
 
-	onShowStatsClick(moviestats: MovieStatsComponent, statsscroll: HTMLElement): void {
-		moviestats.toggle(); 
-		if(moviestats.show) {
-			statsscroll.scrollIntoView({behavior: 'smooth', block: 'center'});
-		}
-	}
-
 	private loadFilmshows() {
 		setTimeout(() => {
 			this.filmshowService.getByMovieId(this.movie.id).subscribe((movies) => {
