@@ -69,7 +69,7 @@ const makeid = (length) => {
 
 app.get('/filmshow/all', (req, res) => {
 	
-	con.query("SELECT filmshows.*, movies.id AS movie_id, movies.title, movies.description, movies.duration, rooms.* FROM filmshows "
+	con.query("SELECT filmshows.*, movies.id AS movie_id, movies.title, movies.description, movies.duration, movies.image, rooms.* FROM filmshows "
 		+ "INNER JOIN movies ON filmshows.movie_id=movies.id "
 		+ "INNER JOIN rooms ON filmshows.room_id=rooms.num", 
 	function (err, result, fields) {
@@ -89,7 +89,8 @@ app.get('/filmshow/all', (req, res) => {
 					"id": r.movie_id,
 					"title": r.title,
 					"description": r.description,
-					"duration": r.duration
+					"duration": r.duration,
+					"image": r.image
 				},
 				"room": {
 					"num": r.num,
@@ -109,7 +110,7 @@ app.get('/filmshow/all', (req, res) => {
 
 app.get('/filmshow/allfuture', (req, res) => {
 	
-	con.query("SELECT filmshows.*, movies.id AS movie_id, movies.title, movies.description, movies.duration, rooms.* FROM filmshows "
+	con.query("SELECT filmshows.*, movies.id AS movie_id, movies.title, movies.description, movies.duration, movies.image, rooms.* FROM filmshows "
 		+ "INNER JOIN movies ON filmshows.movie_id=movies.id "
 		+ "INNER JOIN rooms ON filmshows.room_id=rooms.num WHERE filmshows.date >= NOW() ORDER BY filmshows.date ASC", 
 	function (err, result, fields) {
@@ -129,7 +130,8 @@ app.get('/filmshow/allfuture', (req, res) => {
 					"id": r.movie_id,
 					"title": r.title,
 					"description": r.description,
-					"duration": r.duration
+					"duration": r.duration,
+					"image": r.image
 				},
 				"room": {
 					"num": r.num,
@@ -149,7 +151,7 @@ app.get('/filmshow/allfuture', (req, res) => {
 
 app.get('/filmshow/date/:date', (req, res) => {
 	
-	con.query("SELECT filmshows.*, movies.id AS movie_id, movies.title, movies.description, movies.duration, rooms.* FROM filmshows "
+	con.query("SELECT filmshows.*, movies.id AS movie_id, movies.title, movies.description, movies.duration, movies.image, rooms.* FROM filmshows "
 		+ "INNER JOIN movies ON filmshows.movie_id=movies.id "
 		+ "INNER JOIN rooms ON filmshows.room_id=rooms.num "
 		+ "WHERE filmshows.date LIKE ? ORDER BY filmshows.date ASC", [req.params.date+'%'], 
@@ -176,7 +178,8 @@ app.get('/filmshow/date/:date', (req, res) => {
 					"id": r.movie_id,
 					"title": r.title,
 					"description": r.description,
-					"duration": r.duration
+					"duration": r.duration,
+					"image": r.image
 				},
 				"room": {
 					"num": r.num,
@@ -196,7 +199,7 @@ app.get('/filmshow/date/:date', (req, res) => {
 
 app.get('/filmshow/today', (req, res) => {
 	
-	con.query("SELECT filmshows.*, movies.id AS movie_id, movies.title, movies.description, movies.duration, rooms.* FROM filmshows "
+	con.query("SELECT filmshows.*, movies.id AS movie_id, movies.title, movies.description, movies.duration, movies.image, rooms.* FROM filmshows "
 		+ "INNER JOIN movies ON filmshows.movie_id=movies.id "
 		+ "INNER JOIN rooms ON filmshows.room_id=rooms.num "
 		+ "WHERE filmshows.date >= NOW() AND DATE(filmshows.date) = CURDATE() ORDER BY filmshows.date ASC", [], 
@@ -223,7 +226,8 @@ app.get('/filmshow/today', (req, res) => {
 					"id": r.movie_id,
 					"title": r.title,
 					"description": r.description,
-					"duration": r.duration
+					"duration": r.duration,
+					"image": r.image
 				},
 				"room": {
 					"num": r.num,
@@ -243,7 +247,7 @@ app.get('/filmshow/today', (req, res) => {
 
 app.get('/filmshow/:id', (req, res) => {
 	
-	con.query("SELECT filmshows.*, movies.id AS movie_id, movies.title, movies.description, movies.duration, rooms.* FROM filmshows "
+	con.query("SELECT filmshows.*, movies.id AS movie_id, movies.title, movies.description, movies.duration, movies.image, rooms.* FROM filmshows "
 		+ "INNER JOIN movies ON filmshows.movie_id=movies.id "
 		+ "INNER JOIN rooms ON filmshows.room_id=rooms.num "
 		+ "WHERE filmshows.id = ?", [req.params.id], 
@@ -269,7 +273,8 @@ app.get('/filmshow/:id', (req, res) => {
 				"id": r.movie_id,
 				"title": r.title,
 				"description": r.description,
-				"duration": r.duration
+				"duration": r.duration,
+				"image": r.image
 			},
 			"room": {
 				"num": r.num,
@@ -321,7 +326,7 @@ app.post('/filmshow', (req, res) => {
 		let insertId = result.insertId;
 		
 		
-		con.query("SELECT filmshows.*, movies.id AS movie_id, movies.title, movies.description, movies.duration, rooms.* FROM filmshows "
+		con.query("SELECT filmshows.*, movies.id AS movie_id, movies.title, movies.description, movies.duration, movies.image, rooms.* FROM filmshows "
 		+ "INNER JOIN movies ON filmshows.movie_id=movies.id "
 		+ "INNER JOIN rooms ON filmshows.room_id=rooms.num "
 		+ "WHERE filmshows.id = ?", [insertId], 
@@ -348,7 +353,8 @@ app.post('/filmshow', (req, res) => {
 					"id": r.movie_id,
 					"title": r.title,
 					"description": r.description,
-					"duration": r.duration
+					"duration": r.duration,
+					"image": r.image
 				},
 				"room": {
 					"num": r.num,
@@ -451,7 +457,7 @@ app.get('/movie/:id', (req, res) => {
 
 app.get('/movie/:id/filmshows', (req, res) => {
 	
-	con.query("SELECT filmshows.*, movies.id AS movie_id, movies.title, movies.description, movies.duration, rooms.* FROM filmshows "
+	con.query("SELECT filmshows.*, movies.id AS movie_id, movies.title, movies.description, movies.duration, movies.image, rooms.* FROM filmshows "
 		+ "INNER JOIN movies ON filmshows.movie_id=movies.id "
 		+ "INNER JOIN rooms ON filmshows.room_id=rooms.num "
 		+ "WHERE filmshows.movie_id = ? AND filmshows.date >= NOW() ORDER BY filmshows.date ASC", [req.params.id], 
@@ -493,7 +499,7 @@ app.get('/movie/:id/filmshows', (req, res) => {
 
 app.get('/movie/:id/filmshows/all', (req, res) => {
 	
-	con.query("SELECT filmshows.*, movies.id AS movie_id, movies.title, movies.description, movies.duration, rooms.* FROM filmshows "
+	con.query("SELECT filmshows.*, movies.id AS movie_id, movies.title, movies.description, movies.duration, movies.image, rooms.* FROM filmshows "
 		+ "INNER JOIN movies ON filmshows.movie_id=movies.id "
 		+ "INNER JOIN rooms ON filmshows.room_id=rooms.num "
 		+ "WHERE filmshows.movie_id = ? ORDER BY filmshows.date ASC", [req.params.id], 

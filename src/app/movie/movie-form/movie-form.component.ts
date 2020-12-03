@@ -39,15 +39,22 @@ export class MovieFormComponent implements OnInit {
 	submitMovieFormClick()
 	{
 		if(this.movieForm.valid) {
-			//Object.assign(this.bindMovie, this.movieForm.value);
-			this.bindMovie.title = this.movieForm.value.title;
-			this.bindMovie.description = this.movieForm.value.description;
-			this.bindMovie.duration = this.movieForm.value.duration;
+			let newMovie: Movie = {} as Movie;
+			
+			if(this.bindMovie) {
+				newMovie.id = this.bindMovie.id;
+			}
+			Object.assign(newMovie, this.movieForm.value);
+			//this.bindMovie.title = this.movieForm.value.title;
+			//this.bindMovie.description = this.movieForm.value.description;
+			//this.bindMovie.duration = this.movieForm.value.duration;
 			if(this.image) {
-				this.bindMovie.image = this.image;
+				newMovie.image = this.image;
+			} else if(this.bindMovie) {
+				newMovie.image = this.bindMovie.image;
 			}
 
-			this.onSubmitForm.emit(this.bindMovie);
+			this.onSubmitForm.emit(newMovie);
 			this.show = false;
 		} 
 		else {
