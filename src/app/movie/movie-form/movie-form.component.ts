@@ -10,8 +10,8 @@ import { ToastService } from 'src/app/core/services/toast.service';
 })
 export class MovieFormComponent implements OnInit {
 
-	@Input() bindMovie?: Movie;
-	@Input() buttonText = "Dodaj film";
+	@Input() bindMovie: Movie = {} as Movie;
+	@Input() buttonText: string = "Dodaj film";
 	@Output() onSubmitForm = new EventEmitter<Movie>();
 
 	public show: boolean = false;

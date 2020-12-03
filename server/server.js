@@ -254,12 +254,10 @@ app.get('/filmshow/:id', (req, res) => {
 
 app.put('/filmshow/:id', (req, res) => {
 	
-	let sql = "UPDATE filmshows SET title = ?, description = ?, duration = ? "
-		+", movie_id = ?, room_id = ?, occupied_seats = ? WHERE id = ?";
+	let sql = "UPDATE filmshows SET date = ?, movie_id = ?, room_id = ?, occupied_seats = ? WHERE id = ?";
 	
 	con.query(sql, [
-		req.body.title, req.body.description, req.body.duration, 
-		req.body.movie.id, req.body.room.num, JSON.stringify(req.body.occupied_seats), req.params.id
+		req.body.date, req.body.movie.id, req.body.room.num, JSON.stringify(req.body.occupied_seats), req.params.id
 	],
 	function (err, result) {
 		if (err) {

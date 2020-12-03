@@ -45,18 +45,18 @@ export class MovieService {
 	}
 
 	detele(movie: Movie): Observable<ApiResult> {
-		return this.http.delete<ApiResult>(environment.apiUrl + "/movie/" + movie.id, {})
-			.pipe(tap((x) => { console.log(x); }));
+		return this.http.delete<ApiResult>(environment.apiUrl + "/movie/" + movie.id, {});
+			//.pipe(tap((x) => { console.log(x); }));
 	}
 
 	getById(id: number): Observable<Movie> {
-		return this.http.get<Movie>(environment.apiUrl + "/movie/" + id, {})
-			.pipe(tap((x) => { console.log(x); }));
+		return this.http.get<Movie>(environment.apiUrl + "/movie/" + id, {});
+			//.pipe(tap((x) => { console.log(x); }));
 	}
 
 	getAll(): Observable<Movie[]> {
 		this.http.get<Movie[]>(environment.apiUrl + "/movie/all", {})
-			.pipe(tap((x) => { console.log(x); }))
+			//.pipe(tap((x) => { console.log(x); }))
 			.subscribe((movies) => { 
 				this.movies = movies;
 				this.movies$.next(this.movies);

@@ -17,6 +17,7 @@ import { ToastService } from 'src/app/core/services/toast.service';
 })
 export class FilmshowFormComponent implements OnInit {
 
+	@Input() bindFilmshow: Filmshow = {} as Filmshow;
 	@Input() buttonText = "Dodaj seans";
 	@Output() onSubmitForm = new EventEmitter<Filmshow>();
 
@@ -24,7 +25,6 @@ export class FilmshowFormComponent implements OnInit {
 	public filmshowForm: FormGroup;
 	public movies$: Observable<Movie[]>;
 	public rooms$: Observable<Room[]>;
-	private filmshow: Filmshow = {} as Filmshow;
 	public datepicker: NgbDateStruct;
 	public timepicker: NgbTimeStruct = { hour: 12, minute: 0 } as NgbTimeStruct;
 
@@ -38,8 +38,14 @@ export class FilmshowFormComponent implements OnInit {
 		}
 
 	ngOnInit() {
+		if(this.bindFilmshow.date) {
+			let date = new Date(this.bindFilmshow.date);
+			this.datepicker = {year: date.getFullYear(), month: date.getMonth()+1, day: date.getDate()};
+			this.timepicker = {hour: date.getHours(), minute: date.getMinutes(), second: 0};
+		}
+		
 		this.filmshowForm = new FormGroup({
-			movie: new FormControl(this.filmshow.movie, [
+			movie: new FormControl(this.bindFilmshow.movie, [
 				Validators.required
 			]),
 			datepicker: new FormControl(this.datepicker, [
@@ -48,7 +54,7 @@ export class FilmshowFormComponent implements OnInit {
 			timepicker: new FormControl(this.timepicker, [
 				Validators.required
 			]),
-			room: new FormControl(this.filmshow.room, Validators.required)
+			room: new FormControl(this.bindFilmshow.room, Validators.required)
 		});
 	}
 
@@ -56,11 +62,12 @@ export class FilmshowFormComponent implements OnInit {
 	{
 		if(this.filmshowForm.valid) {
 
-			this.filmshow.movie = this.filmshowForm.value.movie as Movie;
-			this.filmshow.room = this.filmshowForm.value.room as Room;
-			this.filmshow.date = `${this.datepicker.year}-${this.datepicker.month}-${this.datepicker.day} ${this.timepicker.hour}:${this.timepicker.minute}`;
+			this.bindFilmshow.movie = this.filmshowForm.value.movie as Movie;
+			this.bindFilmshow.room = this.filmshowForm.value.room as Room;
+			this.bindFilmshow.date = `${this.datepicker.year}-${this.datepicker.month}-${this.datepicker.day} ${this.timepicker.hour}:${this.timepicker.minute}`;
 			
-			this.onSubmitForm.emit(this.filmshow);
+			console.log(this.bindFilmshow);
+			this.onSubmitForm.emit(this.bindFilmshow);
 			this.show = false;
 		} 
 		else {
@@ -76,4 +83,22 @@ export class FilmshowFormComponent implements OnInit {
 		this.filmshowForm.reset();
 	}
 
+	compareMovies(m1: Movie, m2?: Movie): boolean {
+		if(m2 && m1.id == m2.id) {
+			return true;
+		}
+		return false;
+	}
+
+	compareRooms(r1: Room, r2?: Room): boolean {
+		if(r2 && r1.num == r2.num) {
+			return true;
+		}
+		return false;
+	}
+
+	onDatePickerChange(): void {
+		if(this.datepicker)
+			this.bindFilmshow.date = new Date(`${this.datepicker.year}-${this.datepicker.month}-${this.datepicker.day} ${this.timepicker.hour}:${this.timepicker.minute}`).toISOString();
+	}
 }

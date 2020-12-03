@@ -2,6 +2,8 @@
 
     <div *ngIf="filmshow">
 
+        <app-filmshow-form #formedit buttonText="Zapisz zmiany" [bindFilmshow]="filmshow" (onSubmitForm)="onUpdateFilmshow($event)"></app-filmshow-form>
+
         <div class="row mb-5">
             <div class="col-sm-8">
                 <h3 class="font-weight-semibold">{{ filmshow.movie.title }}</h3>
@@ -26,7 +28,16 @@
 
                 <div>
                     <h5 class="font-weight-bold text-success my-4">Wolne miejsca: {{ filmshow | seatsCnt }}</h5>
-                    <button class="btn btn-primary btn-lg" [routerLink]="['/filmshow/buy', filmshow.id]">Kup bilet</button>
+
+                    <div class="row">
+                        <div class="col">
+                            <button class="btn btn-primary btn-lg" [routerLink]="['/filmshow/buy', filmshow.id]">Kup bilet</button>
+                        </div>
+                        <div class="col text-right">
+                            <button class="btn btn-secondary ml-2" (click)="formedit.toggle()">Edytuj</button>
+                        </div>
+                    </div>
+                    
                 </div>
                 
                 

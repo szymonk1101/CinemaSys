@@ -28,11 +28,15 @@ export class FilmshowService {
 			));
 	}
 
+	update(filmshow: Filmshow): Observable<Filmshow> {
+		return this.http.put<Filmshow>(environment.apiUrl + "/filmshow/" + filmshow.id, filmshow);
+	};
+
 	get(id: number): Observable<Filmshow> {
-		return this.http.get<Filmshow>(environment.apiUrl + "/filmshow/" + id, {})
-			.pipe(
-				tap((x) => { console.log(x); })
-			);
+		return this.http.get<Filmshow>(environment.apiUrl + "/filmshow/" + id, {});
+			//.pipe(
+			//	tap((x) => { console.log(x); })
+			//);
 	}
 
 	getAll(): Observable<Filmshow[]> {

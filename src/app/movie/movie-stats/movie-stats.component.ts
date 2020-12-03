@@ -1,9 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
 
 import { Filmshow } from 'src/app/core/models/Filmshow';
+import { Movie } from 'src/app/core/models/Movie';
 import { FilmshowService } from 'src/app/core/services/filmshow.service';
 
 @Component({
@@ -12,8 +13,9 @@ import { FilmshowService } from 'src/app/core/services/filmshow.service';
 })
 export class MovieStatsComponent implements OnInit {
 
-	private filmshows: Filmshow[];
+	@Input() movie: Movie;
 
+	public show: boolean = false;
 	public barChartOptions: ChartOptions = {
 		responsive: true,
 		scales: {
@@ -29,22 +31,29 @@ export class MovieStatsComponent implements OnInit {
 	public barChartType: ChartType = 'bar';
 	public barChartLegend = true;
 	public barChartPlugins = [];
-
-	private chartData: number[] = [];
-
 	public barChartData: ChartDataSets[] = [
-		{ data: this.chartData, label: 'Liczba biletów' }
+		{ data: [], label: 'Liczba sprzedanych biletów' }
 	];
+
+	private filmshows: Filmshow[];
+	private chartData: number[] = [];
+	
 
 	constructor(
 		private filmshowService: FilmshowService
 	) { }
 
 	ngOnInit(): void {
-		this.filmshowService.getAllByMovieId(6).subscribe((filmshows) => {
-			this.filmshows = filmshows;
-			this.calculateChartData();
-		});
+		if(this.movie) {
+			this.filmshowService.getAllByMovieId(this.movie.id).subscribe((filmshows) => {
+				this.filmshows = filmshows;
+				this.calculateChartData();
+			});
+		}
+	}
+
+	public toggle(): void {
+		this.show = !this.show;
 	}
 
 	private calculateChartData(): void {
@@ -58,6 +67,7 @@ export class MovieStatsComponent implements OnInit {
 			}
 
 		});
+		this.barChartData = [{ data: this.chartData, label: 'Liczba sprzedanych biletów' }];
 	}
 
 }

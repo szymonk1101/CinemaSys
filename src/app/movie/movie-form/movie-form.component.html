@@ -1,23 +1,25 @@
-<form [class.d-none]="!this.show" [formGroup]="movieForm">
+<form [class.d-none]="!this.show" [formGroup]="movieForm" class="mb-4">
     <div class="alert alert-success" [class.d-none]="this.success_msg == undefined" role="alert">
         {{ success_msg }}
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="movie_name">Tytuł</label>
-            <input type="text" class="form-control" id="movie_name" formControlName="title" placeholder="Tytuł filmu" required />
+            <input type="text" class="form-control" id="movie_name" formControlName="title" [(ngModel)]="bindMovie.title" placeholder="Tytuł filmu" required />
         </div>
         <div class="form-group col-md-6">
             <label for="movie_duration">Czas trwania (min)</label>
-            <input type="number" class="form-control" id="movie_duration" formControlName="duration" required />
+            <input type="number" class="form-control" id="movie_duration" formControlName="duration" [(ngModel)]="bindMovie.duration" required />
         </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-12">
-            <textarea class="form-control" id="movie_description" placeholder="Opis filmu" formControlName="description" required></textarea>
+            <textarea class="form-control" id="movie_description" placeholder="Opis filmu" formControlName="description" [(ngModel)]="bindMovie.description" required></textarea>
         </div>
     </div>
 
-    <button class="btn btn-success" (click)="submitMovieFormClick()" [disabled]="!this.movieForm.valid">{{ buttonText }}</button>
+    <div class="form-row justify-content-end">
+        <button class="btn btn-success" (click)="submitMovieFormClick()" [disabled]="!this.movieForm.valid">{{ buttonText }}</button>
+    </div>
 
 </form>

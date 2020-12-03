@@ -1,14 +1,23 @@
-<div class="container my-5">
 
-    <canvas baseChart 
-        [datasets]="barChartData"
-        [labels]="barChartLabels"
-        [options]="barChartOptions"
-        [plugins]="barChartPlugins"
-        [legend]="barChartLegend"
-        [chartType]="barChartType">
-    </canvas>
+<div *ngIf="this.show" class="row mt-5">
+    <div class="col-sm-12">
+        <h4>Statystyki</h4>
+    </div>
+    <div class="col-sm-12">
 
+        <div *ngIf="!movie || barChartLabels.length == 0" class="" role="status">
+            Brak danych.
+        </div>
 
+        <canvas *ngIf="movie && barChartLabels.length > 0" baseChart 
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [plugins]="barChartPlugins"
+            [legend]="barChartLegend"
+            [chartType]="barChartType">
+        </canvas>
+
+    </div>
 </div>
 
