@@ -40,7 +40,7 @@ export class MovieDetailsComponent implements OnInit {
 	}
 
 	onUpdateMovie(movie: Movie): void {
-		if(typeof movie.image !== "string") {
+		if(movie.image != undefined && typeof movie.image !== "string") {
 			this.imageService.uploadImage(movie.image as File).subscribe(
 				(res: ApiResult) => {
 					movie.image = res.data.shift();
