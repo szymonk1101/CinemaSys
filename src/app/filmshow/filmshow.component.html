@@ -41,4 +41,8 @@
         <span class="sr-only">Loading...</span>
     </div>
 
+    <div *ngIf="!loading && (!filmshows || filmshows.length == 0)">
+        Nie znaleziono seansów spełniających wybrane kryteria.
+    </div>
+
 </div>
